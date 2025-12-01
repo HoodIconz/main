@@ -19,40 +19,44 @@
             theme: {
                 extend: {
                     colors: {
-                        'cyber-pink': '#ff2a6d',
-                        'cyber-blue': '#05d9e8',
-                        'cyber-purple': '#7d12ff',
-                        'void-dark': '#020205',
-                        'glass-border': 'rgba(255, 255, 255, 0.1)',
+                        'cyber-pink': '#FF0055', /* More vibrant pop */
+                        'cyber-blue': '#00F0FF', /* More vibrant pop */
+                        'cyber-purple': '#8F00FF',
+                        'void-dark': '#000000',
                     },
                     fontFamily: {
                         'display': ['Orbitron', 'sans-serif'],
                         'body': ['Montserrat', 'sans-serif'],
                     },
                     animation: {
-                        'float': 'float 6s ease-in-out infinite',
+                        'float': 'float 8s ease-in-out infinite',
                         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'spin-slow': 'spin 12s linear infinite',
                         'marquee': 'marquee 25s linear infinite',
-                        'fade-in': 'fadeIn 0.3s ease-in-out',
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'gradient-move': 'gradientMove 15s ease infinite',
                     },
                     keyframes: {
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
+                            '50%': { transform: 'translateY(-15px)' },
                         },
                         marquee: {
                             '0%': { transform: 'translateX(0%)' },
                             '100%': { transform: 'translateX(-100%)' },
                         },
                         fadeIn: {
-                            '0%': { opacity: '0.5' },
-                            '100%': { opacity: '1' },
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        gradientMove: {
+                            '0%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
+                            '100%': { backgroundPosition: '0% 50%' },
                         }
                     },
                     dropShadow: {
-                        'glow-blue': '0 0 10px rgba(5, 217, 232, 0.5)',
-                        'glow-pink': '0 0 10px rgba(255, 42, 109, 0.5)',
+                        'glow-blue': '0 0 15px rgba(0, 240, 255, 0.6)',
+                        'glow-pink': '0 0 15px rgba(255, 0, 85, 0.6)',
                     }
                 }
             }
@@ -60,71 +64,78 @@
     </script>
 
     <style>
-        /* Base Aesthetic */
+        /* Base Aesthetic - Apple/Samsung Modern Mesh */
         body {
-            background: linear-gradient(to bottom, #05d9e8, #7d12ff);
+            background-color: #000000;
             color: #ffffff;
             overflow-x: hidden;
+            /* No static background image on body, using fixed div for mesh */
         }
 
-        /* Chrome Text Effect */
+        /* Modern Mesh Gradient Background */
+        .mesh-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            background: 
+                radial-gradient(at 0% 0%, rgba(0, 240, 255, 0.25) 0px, transparent 50%),
+                radial-gradient(at 98% 1%, rgba(143, 0, 255, 0.25) 0px, transparent 50%),
+                radial-gradient(at 98% 98%, rgba(255, 0, 85, 0.2) 0px, transparent 50%),
+                radial-gradient(at 2% 98%, rgba(0, 240, 255, 0.15) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(255, 255, 255, 0.03) 0px, transparent 50%);
+            filter: blur(80px); /* The "Samsung" soft blur look */
+            background-size: 120% 120%;
+            opacity: 0.8;
+        }
+
+        /* Chrome Text Effect - Cleaner, Sharper */
         .chrome-text {
-            background: linear-gradient(180deg, #ffffff 0%, #eefbfb 45%, #05d9e8 50%, #ffffff 50%, #7d12ff 100%);
+            background: linear-gradient(180deg, #FFFFFF 0%, #E0E0E0 40%, #00F0FF 50%, #FFFFFF 55%, #8F00FF 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 15px rgba(5, 217, 232, 0.3));
+            filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.4));
         }
 
         .chrome-text-simple {
-            background: linear-gradient(to right, #fff, #05d9e8, #fff);
+            background: linear-gradient(to right, #fff, #00F0FF, #fff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        /* Premium Liquid Glass - Increased opacity for readability */
+        /* Premium Liquid Glass - Apple "Frosted" Style */
         .glass-panel {
-            background: rgba(0, 0, 0, 0.25);
-            backdrop-filter: blur(20px) saturate(150%);
-            -webkit-backdrop-filter: blur(20px) saturate(150%);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(20, 20, 20, 0.4);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 
-                0 8px 32px 0 rgba(0, 0, 0, 0.5),
+                0 20px 40px rgba(0, 0, 0, 0.4),
                 inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); /* iOS Easing */
         }
 
         .glass-panel:hover {
-            background: rgba(0, 0, 0, 0.35);
-            border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 
-                0 15px 50px rgba(0, 0, 0, 0.6),
-                inset 0 0 20px rgba(255, 255, 255, 0.05);
-            transform: translateY(-8px) scale(1.01);
+            background: rgba(30, 30, 30, 0.5);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px) scale(1.005);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
         }
         
-        /* Action Button */
-        .btn-glitch {
-            position: relative;
-            z-index: 1;
-        }
-        .btn-glitch::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: inherit;
-            background: linear-gradient(45deg, #ff2a6d, #05d9e8);
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .btn-glitch:hover::before {
-            opacity: 1;
+        /* Action Button with "Google Pop" Gradient */
+        .btn-modern {
+            background: linear-gradient(135deg, #FF0055, #8F00FF, #00F0FF);
+            background-size: 200% 200%;
+            animation: gradientMove 5s ease infinite;
+            border: none;
         }
 
         /* Notification Animation */
         .notification {
             transform: translateX(150%);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
         }
         .notification.show {
             transform: translateX(0);
@@ -137,53 +148,56 @@
 
         /* Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
-        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #05d9e8; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00F0FF; }
         
         .fade-in {
-            animation: fadeIn 0.4s ease-out forwards;
+            animation: fadeIn 0.6s ease-out forwards;
         }
         
         /* Text readability helpers */
-        .text-shadow-sm { text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
-        .text-shadow-md { text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .text-shadow-sm { text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .text-shadow-glow { text-shadow: 0 0 20px rgba(0, 240, 255, 0.5); }
     </style>
 </head>
-<body class="font-body antialiased relative min-h-screen selection:bg-cyber-pink selection:text-white">
+<body class="font-body antialiased relative min-h-screen selection:bg-cyber-blue selection:text-black">
+
+    <!-- The Modern Mesh Background -->
+    <div class="mesh-background"></div>
 
     <!-- Notification Toast -->
-    <div id="notification" class="fixed top-24 right-5 z-50 notification glass-panel p-4 rounded-xl flex items-center gap-4 border-l-4 border-cyber-blue">
-        <div class="w-8 h-8 rounded-full bg-cyber-blue/20 flex items-center justify-center text-cyber-blue">
+    <div id="notification" class="fixed top-24 right-5 z-50 notification glass-panel p-4 rounded-2xl flex items-center gap-4 border border-white/10">
+        <div class="w-10 h-10 rounded-full bg-cyber-blue flex items-center justify-center text-black shadow-[0_0_15px_#00F0FF]">
             <i class="fas fa-check"></i>
         </div>
         <div>
-            <h4 class="font-display font-bold text-sm text-white text-shadow-sm">System Update</h4>
-            <p class="text-xs text-gray-300 text-shadow-sm">Item added to cart successfully.</p>
+            <h4 class="font-body font-bold text-sm text-white">Added to Cache</h4>
+            <p class="text-xs text-gray-300">Your selection is secured.</p>
         </div>
     </div>
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 transition-all duration-300 backdrop-blur-xl bg-black/70 border-b border-white/10">
+    <nav class="fixed w-full z-50 transition-all duration-300 backdrop-blur-xl bg-black/50 border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <!-- Logo -->
             <a href="#" class="group flex items-center gap-2">
-                <i class="fas fa-cube text-2xl text-cyber-pink group-hover:rotate-90 transition-transform duration-500 drop-shadow-glow-pink"></i>
-                <span class="font-display font-black text-xl tracking-widest text-white group-hover:text-cyber-blue transition-colors text-shadow-md">HOOD ICONZ</span>
+                <i class="fas fa-cube text-2xl text-cyber-blue group-hover:rotate-90 transition-transform duration-500 drop-shadow-glow-blue"></i>
+                <span class="font-display font-black text-xl tracking-widest text-white group-hover:text-cyber-blue transition-colors">HOOD ICONZ</span>
             </a>
 
             <!-- Desktop Links -->
             <div class="hidden md:flex items-center gap-8">
-                <a href="#products" class="text-xs font-bold tracking-[0.2em] text-gray-300 hover:text-white transition-colors uppercase text-shadow-sm">Collection</a>
-                <a href="#about" class="text-xs font-bold tracking-[0.2em] text-gray-300 hover:text-white transition-colors uppercase text-shadow-sm">Concept</a>
-                <a href="#features" class="text-xs font-bold tracking-[0.2em] text-gray-300 hover:text-white transition-colors uppercase text-shadow-sm">Tech</a>
+                <a href="#products" class="text-xs font-bold tracking-[0.2em] text-gray-300 hover:text-white transition-colors uppercase">Collection</a>
+                <a href="#about" class="text-xs font-bold tracking-[0.2em] text-gray-300 hover:text-white transition-colors uppercase">Concept</a>
+                <a href="#features" class="text-xs font-bold tracking-[0.2em] text-gray-300 hover:text-white transition-colors uppercase">Tech</a>
             </div>
 
             <!-- Actions -->
             <div class="flex items-center gap-6">
                 <button onclick="toggleCart()" class="relative group">
-                    <i class="fas fa-shopping-bag text-xl text-gray-300 group-hover:text-cyber-blue transition-colors drop-shadow-sm"></i>
-                    <span id="cart-badge" class="absolute -top-1 -right-2 bg-cyber-pink text-white text-[10px] font-bold h-4 w-4 flex items-center justify-center rounded-full hidden shadow-sm">0</span>
+                    <i class="fas fa-shopping-bag text-xl text-white group-hover:text-cyber-blue transition-colors"></i>
+                    <span id="cart-badge" class="absolute -top-1 -right-2 bg-cyber-pink text-white text-[10px] font-bold h-4 w-4 flex items-center justify-center rounded-full hidden shadow-[0_0_10px_#FF0055]">0</span>
                 </button>
             </div>
         </div>
@@ -195,32 +209,32 @@
         <!-- Main Content -->
         <div class="relative z-10 text-center w-full max-w-6xl mx-auto">
             
-            <p class="font-mono text-white/90 text-xs md:text-sm tracking-[0.5em] mb-4 animate-pulse text-shadow-md">EST. 2085 // AUTOMOTIVE AUGMENTATION</p>
+            <p class="font-mono text-cyber-blue text-xs md:text-sm tracking-[0.5em] mb-4 animate-pulse drop-shadow-glow-blue">EST. 2085 // AUTOMOTIVE AUGMENTATION</p>
             
             <!-- Massive Chrome Title -->
-            <h1 class="font-display font-black text-6xl sm:text-8xl md:text-9xl tracking-tighter leading-none mb-8 chrome-text select-none hover:scale-[1.02] transition-transform duration-500 drop-shadow-2xl">
+            <h1 class="font-display font-black text-6xl sm:text-8xl md:text-9xl tracking-tighter leading-none mb-8 chrome-text select-none hover:scale-[1.02] transition-transform duration-500">
                 HOOD<br>ICONZ
             </h1>
             
             <div class="mt-12 flex flex-col md:flex-row items-center justify-center gap-6">
-                <a href="#products" class="btn-glitch px-8 py-4 bg-white text-black font-display font-bold text-sm tracking-widest uppercase rounded hover:text-white transition-colors shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                <a href="#products" class="btn-modern px-10 py-4 text-white font-display font-bold text-sm tracking-widest uppercase rounded-full hover:scale-105 transition-transform shadow-[0_0_30px_rgba(0,240,255,0.4)]">
                     Access Shop
                 </a>
-                <p class="text-gray-200 text-sm max-w-xs md:text-left font-light leading-relaxed text-shadow-sm">
+                <p class="text-gray-200 text-sm max-w-xs md:text-left font-light leading-relaxed text-shadow-sm border-l border-white/20 pl-4">
                     Magnetic, modular hood ornaments for the modern outlaw. <span class="text-white font-medium">No drills required.</span>
                 </p>
             </div>
         </div>
 
         <!-- Scrolling Ticker -->
-        <div class="absolute bottom-0 w-full border-t border-white/10 bg-black/50 backdrop-blur-md h-12 flex items-center overflow-hidden marquee-container">
+        <div class="absolute bottom-0 w-full border-t border-white/5 bg-black/20 backdrop-blur-md h-12 flex items-center overflow-hidden marquee-container">
             <div class="whitespace-nowrap animate-marquee flex gap-12 items-center">
-                <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase text-shadow-sm"><span class="text-cyber-blue mx-2 drop-shadow-glow-blue">+</span> High Velocity Magnets</span>
-                <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase text-shadow-sm"><span class="text-cyber-pink mx-2 drop-shadow-glow-pink">+</span> Weatherproof ABS</span>
-                <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase text-shadow-sm"><span class="text-cyber-purple mx-2">+</span> Modular Design</span>
-                <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase text-shadow-sm"><span class="text-cyber-blue mx-2 drop-shadow-glow-blue">+</span> High Velocity Magnets</span>
-                <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase text-shadow-sm"><span class="text-cyber-pink mx-2 drop-shadow-glow-pink">+</span> Weatherproof ABS</span>
-                <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase text-shadow-sm"><span class="text-cyber-purple mx-2">+</span> Modular Design</span>
+                <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase"><span class="text-cyber-blue mx-2 drop-shadow-glow-blue">●</span> High Velocity Magnets</span>
+                <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase"><span class="text-cyber-pink mx-2 drop-shadow-glow-pink">●</span> Weatherproof ABS</span>
+                <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase"><span class="text-cyber-purple mx-2">●</span> Modular Design</span>
+                <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase"><span class="text-cyber-blue mx-2 drop-shadow-glow-blue">●</span> High Velocity Magnets</span>
+                <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase"><span class="text-cyber-pink mx-2 drop-shadow-glow-pink">●</span> Weatherproof ABS</span>
+                <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase"><span class="text-cyber-purple mx-2">●</span> Modular Design</span>
             </div>
         </div>
     </header>
@@ -229,20 +243,26 @@
     <section id="features" class="py-24 relative z-10">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="glass-panel p-8 rounded-2xl group">
-                    <i class="fas fa-magnet text-4xl text-cyber-pink mb-6 group-hover:scale-110 transition-transform drop-shadow-glow-pink"></i>
-                    <h3 class="font-display font-bold text-xl mb-3 text-white text-shadow-md">Magnetic Grip</h3>
-                    <p class="text-gray-300 text-sm leading-relaxed text-shadow-sm">Industrial grade neodymium magnets ensure your icon stays mounted up to 140mph. Tested on the autobahn.</p>
+                <div class="glass-panel p-8 rounded-3xl group">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-gray-800 to-black flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg border border-white/10">
+                        <i class="fas fa-magnet text-3xl text-cyber-pink drop-shadow-glow-pink"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-xl mb-3 text-white">Magnetic Grip</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Industrial grade neodymium magnets ensure your icon stays mounted up to 140mph. Tested on the autobahn.</p>
                 </div>
-                <div class="glass-panel p-8 rounded-2xl group">
-                    <i class="fas fa-layer-group text-4xl text-cyber-blue mb-6 group-hover:scale-110 transition-transform drop-shadow-glow-blue"></i>
-                    <h3 class="font-display font-bold text-xl mb-3 text-white text-shadow-md">Swap & Go</h3>
-                    <p class="text-gray-300 text-sm leading-relaxed text-shadow-sm">Change your style in seconds. Our universal mounting puck lets you swap icons instantly.</p>
+                <div class="glass-panel p-8 rounded-3xl group">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-gray-800 to-black flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg border border-white/10">
+                        <i class="fas fa-layer-group text-3xl text-cyber-blue drop-shadow-glow-blue"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-xl mb-3 text-white">Swap & Go</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Change your style in seconds. Our universal mounting puck lets you swap icons instantly.</p>
                 </div>
-                <div class="glass-panel p-8 rounded-2xl group">
-                    <i class="fas fa-cube text-4xl text-cyber-purple mb-6 group-hover:scale-110 transition-transform"></i>
-                    <h3 class="font-display font-bold text-xl mb-3 text-white text-shadow-md">Custom Print</h3>
-                    <p class="text-gray-300 text-sm leading-relaxed text-shadow-sm">Each piece is printed in high-fidelity resin, hand-sanded, and painted for a showroom finish.</p>
+                <div class="glass-panel p-8 rounded-3xl group">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-gray-800 to-black flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg border border-white/10">
+                        <i class="fas fa-cube text-3xl text-cyber-purple"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-xl mb-3 text-white">Custom Print</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Each piece is printed in high-fidelity resin, hand-sanded, and painted for a showroom finish.</p>
                 </div>
             </div>
         </div>
@@ -253,13 +273,13 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
                 <div>
-                    <h2 class="font-display font-black text-4xl md:text-5xl text-white mb-2 chrome-text-simple text-shadow-lg">THE ARMORY</h2>
-                    <p class="text-gray-300 text-sm tracking-widest uppercase text-shadow-sm">Latest Arrivals / Season 4</p>
+                    <h2 class="font-display font-black text-4xl md:text-5xl text-white mb-2 chrome-text-simple">THE ARMORY</h2>
+                    <p class="text-gray-300 text-sm tracking-widest uppercase">Latest Arrivals / Season 4</p>
                 </div>
                 <div class="flex gap-2">
-                    <button class="px-4 py-2 glass-panel rounded-lg text-xs font-bold text-white hover:bg-white/10 active text-shadow-sm">ALL</button>
-                    <button class="px-4 py-2 border border-white/10 rounded-lg text-xs font-bold text-gray-300 hover:text-white hover:border-white/30 transition-colors text-shadow-sm">CHROME</button>
-                    <button class="px-4 py-2 border border-white/10 rounded-lg text-xs font-bold text-gray-300 hover:text-white hover:border-white/30 transition-colors text-shadow-sm">NEON</button>
+                    <button class="px-5 py-2 glass-panel rounded-full text-xs font-bold text-white hover:bg-white/20 active">ALL</button>
+                    <button class="px-5 py-2 border border-white/10 rounded-full text-xs font-bold text-gray-400 hover:text-white hover:border-white/30 transition-colors">CHROME</button>
+                    <button class="px-5 py-2 border border-white/10 rounded-full text-xs font-bold text-gray-400 hover:text-white hover:border-white/30 transition-colors">NEON</button>
                 </div>
             </div>
 
@@ -270,42 +290,42 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-black/80 border-t border-white/10 py-16 relative z-10 backdrop-blur-xl">
+    <footer class="bg-black/40 border-t border-white/5 py-16 relative z-10 backdrop-blur-xl">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-12">
                 <div>
-                    <h3 class="font-display font-black text-2xl text-white tracking-widest mb-2 text-shadow-md">HOOD ICONZ</h3>
-                    <p class="text-gray-400 text-sm max-w-md text-shadow-sm">The future of automotive customization. <br>Based in Neo-Tokyo, shipping worldwide.</p>
+                    <h3 class="font-display font-black text-2xl text-white tracking-widest mb-2">HOOD ICONZ</h3>
+                    <p class="text-gray-500 text-sm max-w-md">The future of automotive customization. <br>Based in Neo-Tokyo, shipping worldwide.</p>
                 </div>
                 <div class="flex gap-6">
-                    <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-cyber-pink hover:shadow-[0_0_15px_rgba(255,42,109,0.4)] transition-all">
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:text-white hover:bg-cyber-pink transition-all">
                         <i class="fab fa-instagram"></i>
                     </a>
-                    <a href="#" class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-cyber-blue hover:shadow-[0_0_15px_rgba(5,217,232,0.4)] transition-all">
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:text-white hover:bg-cyber-blue transition-all">
                         <i class="fab fa-twitter"></i>
                     </a>
                 </div>
             </div>
             <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 font-mono">
-                <p class="text-shadow-sm">&copy; 2085 HOOD ICONZ. ALL RIGHTS RESERVED.</p>
+                <p>&copy; 2085 HOOD ICONZ. ALL RIGHTS RESERVED.</p>
                 <div class="flex gap-6 mt-4 md:mt-0">
-                    <a href="#" class="hover:text-gray-300 transition-colors text-shadow-sm">PRIVACY</a>
-                    <a href="#" class="hover:text-gray-300 transition-colors text-shadow-sm">TERMS</a>
-                    <a href="#" class="hover:text-gray-300 transition-colors text-shadow-sm">RETURNS</a>
+                    <a href="#" class="hover:text-gray-300 transition-colors">PRIVACY</a>
+                    <a href="#" class="hover:text-gray-300 transition-colors">TERMS</a>
+                    <a href="#" class="hover:text-gray-300 transition-colors">RETURNS</a>
                 </div>
             </div>
         </div>
     </footer>
 
     <!-- Cart Slide-Over -->
-    <div id="cart-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] hidden transition-opacity opacity-0" onclick="toggleCart()"></div>
-    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-black/90 border-l border-white/10 z-[70] transform translate-x-full transition-transform duration-300 flex flex-col shadow-[-20px_0_50px_rgba(0,0,0,0.5)] backdrop-blur-xl">
+    <div id="cart-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-md z-[60] hidden transition-opacity opacity-0" onclick="toggleCart()"></div>
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-[#0a0a0a] border-l border-white/10 z-[70] transform translate-x-full transition-transform duration-500 cubic-bezier(0.19, 1, 0.22, 1) flex flex-col shadow-[-20px_0_50px_rgba(0,0,0,0.7)]">
         
         <!-- Cart Header -->
-        <div class="p-6 border-b border-white/5 flex justify-between items-center bg-white/5 backdrop-blur-md">
+        <div class="p-6 border-b border-white/5 flex justify-between items-center bg-white/5 backdrop-blur-xl">
             <div>
-                <h2 class="text-xl font-display font-bold text-white tracking-wider text-shadow-md">YOUR CACHE</h2>
-                <p class="text-xs text-gray-400 font-mono mt-1 text-shadow-sm">SECURE TRANSACTION // ENCRYPTED</p>
+                <h2 class="text-xl font-display font-bold text-white tracking-wider">YOUR CACHE</h2>
+                <p class="text-xs text-gray-400 font-mono mt-1">SECURE TRANSACTION // ENCRYPTED</p>
             </div>
             <button onclick="toggleCart()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors">
                 <i class="fas fa-times text-gray-400 hover:text-white"></i>
@@ -318,14 +338,13 @@
         </div>
 
         <!-- Cart Footer -->
-        <div class="p-8 border-t border-white/5 bg-white/5 backdrop-blur-md">
+        <div class="p-8 border-t border-white/5 bg-white/5 backdrop-blur-xl">
             <div class="flex justify-between items-end mb-6">
-                <span class="text-gray-400 text-xs font-bold tracking-widest uppercase text-shadow-sm">Subtotal</span>
-                <span id="cart-total" class="text-2xl font-display font-bold text-white text-shadow-md">$0.00</span>
+                <span class="text-gray-400 text-xs font-bold tracking-widest uppercase">Subtotal</span>
+                <span id="cart-total" class="text-2xl font-display font-bold text-white">$0.00</span>
             </div>
-            <button class="w-full py-4 bg-gradient-to-r from-cyber-blue to-cyber-purple text-white font-bold font-display uppercase tracking-widest hover:opacity-90 transition-opacity rounded relative overflow-hidden group shadow-lg">
-                <span class="relative z-10 text-shadow-sm">Initiate Checkout</span>
-                <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+            <button class="w-full py-4 btn-modern text-white font-bold font-display uppercase tracking-widest hover:opacity-90 transition-opacity rounded-xl shadow-[0_0_20px_rgba(0,240,255,0.3)]">
+                Initiate Checkout
             </button>
         </div>
     </div>
@@ -336,60 +355,29 @@
         const products = [
             {
                 id: 1,
-                name: "Product 1",
+                name: "UNICORN",
                 price: 49.00,
                 images: [
-                    "https://i.ibb.co/0j45LcBS/Screenshot-2025-11-30-at-4-20-51-PM.png",
-                    "https://api.dicebear.com/7.x/bottts/svg?seed=Skull&backgroundColor=transparent"
+                    "https://i.ibb.co/RkQ9XzTG/Screenshot-2025-11-30-at-4-26-34-PM.png"
                 ],
                 currentImageIndex: 0,
-                desc: "Product Description",
-                tags: ["NEW", "HOT"]
+                desc: "The classic reimagined. Low-poly geometry with a menacing matte finish."
             },
             {
                 id: 2,
-                name: "Product 2",
+                name: "ELEPHANT",
                 price: 55.00,
-                images: ["https://api.dicebear.com/7.x/bottts/svg?seed=Spike&backgroundColor=transparent"],
+                images: ["https://i.ibb.co/B5SYPtJw/Screenshot-2025-11-30-at-8-56-18-PM.png"],
                 currentImageIndex: 0,
-                desc: "Product Description",
-                tags: ["FAST"]
+                desc: "The classic elephant. 1st edition."
             },
             {
                 id: 3,
-                name: "Product 3",
+                name: "GOLDEN RETREIVER",
                 price: 65.00,
-                images: ["https://api.dicebear.com/7.x/bottts/svg?seed=Wolf&backgroundColor=transparent"],
+                images: ["https://i.ibb.co/n8kCT4X9/Screenshot-2025-11-30-at-9-13-05-PM.png"],
                 currentImageIndex: 0,
-                desc: "Product Description",
-                tags: ["LIMITED"]
-            },
-            {
-                id: 4,
-                name: "Product 4",
-                price: 42.00,
-                images: ["https://api.dicebear.com/7.x/bottts/svg?seed=Palm&backgroundColor=transparent"],
-                currentImageIndex: 0,
-                desc: "Product Description",
-                tags: []
-            },
-            {
-                id: 5,
-                name: "Product 5",
-                price: 70.00,
-                images: ["https://api.dicebear.com/7.x/bottts/svg?seed=Oni&backgroundColor=transparent"],
-                currentImageIndex: 0,
-                desc: "Product Description",
-                tags: ["RARE"]
-            },
-            {
-                id: 6,
-                name: "Product 6",
-                price: 58.00,
-                images: ["https://api.dicebear.com/7.x/bottts/svg?seed=Hex&backgroundColor=transparent"],
-                currentImageIndex: 0,
-                desc: "Product Description",
-                tags: []
+                desc: "Ancient protection meets future tech. Aggressive styling for aggressive drivers."
             }
         ];
 
@@ -402,30 +390,24 @@
                 const hasMultipleImages = product.images.length > 1;
                 
                 return `
-                <div class="glass-panel rounded-2xl overflow-hidden relative group h-full flex flex-col" style="animation-delay: ${index * 100}ms">
+                <div class="glass-panel rounded-3xl overflow-hidden relative group h-full flex flex-col" style="animation-delay: ${index * 100}ms">
                     
                     <!-- Image Area -->
-                    <div class="h-64 relative overflow-hidden bg-black/20 flex items-center justify-center p-8 group/image">
-                        <!-- Placeholder Text -->
-                        <span class="font-display font-bold text-2xl text-cyber-blue tracking-widest uppercase z-10 text-shadow-md">
-                            ${product.name}
-                        </span>
-
-                        <!-- Tags -->
-                        <div class="absolute top-4 left-4 flex gap-2 z-10">
-                            ${product.tags.map(tag => `<span class="px-2 py-1 bg-cyber-pink/20 border border-cyber-pink/50 text-[10px] font-bold text-cyber-pink rounded shadow-sm">${tag}</span>`).join('')}
-                        </div>
+                    <div class="h-64 relative overflow-hidden bg-white/5 flex items-center justify-center p-4 group/image">
+                        
+                        <!-- Main Image -->
+                        <img src="${product.images[0]}" class="h-full w-full object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover:scale-105 z-0">
                     </div>
                     
                     <!-- Content -->
-                    <div class="p-6 flex-1 flex flex-col border-t border-white/10">
+                    <div class="p-6 flex-1 flex flex-col border-t border-white/5">
                         <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-display font-bold text-lg text-white group-hover:text-cyber-blue transition-colors text-shadow-sm">${product.name}</h3>
-                            <span class="font-mono text-white text-shadow-sm">$${product.price}</span>
+                            <h3 class="font-display font-bold text-lg text-white group-hover:text-cyber-blue transition-colors">${product.name}</h3>
+                            <span class="font-mono text-white">$${product.price}</span>
                         </div>
-                        <p class="text-gray-300 text-xs leading-relaxed mb-6 flex-1 font-light text-shadow-sm">${product.desc}</p>
+                        <p class="text-gray-300 text-xs leading-relaxed mb-6 flex-1 font-light">${product.desc}</p>
                         
-                        <button onclick="addToCart(${product.id})" class="w-full py-3 border border-white/20 rounded-lg text-xs font-bold text-white uppercase tracking-widest hover:bg-white hover:text-black transition-all group-hover:border-white/50 flex items-center justify-center gap-2 backdrop-blur-sm bg-black/20 shadow-sm">
+                        <button onclick="addToCart(${product.id})" class="w-full py-3 border border-white/10 rounded-xl text-xs font-bold text-white uppercase tracking-widest hover:bg-white hover:text-black transition-all group-hover:border-white/30 flex items-center justify-center gap-2 backdrop-blur-sm bg-black/20">
                             <span>Add to Cache</span>
                             <i class="fas fa-plus text-[10px]"></i>
                         </button>
@@ -446,24 +428,10 @@
                 product.currentImageIndex = (product.currentImageIndex - 1 + product.images.length) % product.images.length;
             }
 
-            const imgElement = document.getElementById(`img-${productId}`);
-            imgElement.classList.remove('fade-in');
-            void imgElement.offsetWidth;
-            imgElement.classList.add('fade-in');
-            imgElement.src = product.images[product.currentImageIndex];
-
-            product.images.forEach((_, i) => {
-                const dot = document.getElementById(`dot-${productId}-${i}`);
-                if(dot) {
-                    if(i === product.currentImageIndex) {
-                        dot.classList.remove('bg-white/20');
-                        dot.classList.add('bg-cyber-blue');
-                    } else {
-                        dot.classList.add('bg-white/20');
-                        dot.classList.remove('bg-cyber-blue');
-                    }
-                }
-            });
+            // Note: Since we are using background images/text overlay now based on the "placeholder" requirement from earlier turns, 
+            // the gallery logic might need adjustment if real images are to be swapped. 
+            // However, the current rendering logic in renderProducts() uses product.images[0] as a background.
+            // I will leave this function here in case you add multiple images later, but currently it won't be triggered as length is 1.
         }
 
         // --- Cart Functions ---
@@ -555,7 +523,7 @@
             } else {
                 sidebar.classList.add('translate-x-full');
                 overlay.classList.add('opacity-0');
-                setTimeout(() => overlay.classList.add('hidden'), 300);
+                setTimeout(() => overlay.classList.add('hidden'), 500);
                 document.body.style.overflow = '';
             }
         }
