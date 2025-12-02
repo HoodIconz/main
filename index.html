@@ -186,6 +186,59 @@
         /* Text readability helpers */
         .text-shadow-sm { text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
         .text-shadow-glow { text-shadow: 0 0 20px rgba(0, 240, 255, 0.5); }
+
+        /* FAQ Section Styling */
+        .faq details {
+            border-bottom: 1px solid rgba(255,255,255,0.1); /* Adjusted for transparency */
+            padding: 20px 0;
+        }
+
+        /* Question styling */
+        .faq summary {
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.1em;
+            position: relative;
+            padding-left: 35px;
+            color: #FF0055; /* Matched to cyber-pink theme */
+            transition: all 0.3s ease;
+            list-style: none; /* Remove default marker */
+        }
+        
+        .faq summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .faq summary:hover {
+            color: #00F0FF; /* Hover to cyber-blue */
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        /* Arrow icon */
+        .faq summary::before {
+            content: "▶";
+            position: absolute;
+            left: 0;
+            font-size: 0.8em;
+            top: 4px;
+            transition: transform 0.3s ease;
+            color: inherit;
+        }
+
+        /* Rotate arrow when open */
+        .faq details[open] summary::before {
+            transform: rotate(90deg);
+        }
+
+        /* Answer styling */
+        .faq details p {
+            margin-top: 15px;
+            line-height: 1.8;
+            color: #ccc;
+            font-size: 0.95em;
+            padding-left: 35px;
+            animation: fadeIn 0.5s ease-out;
+        }
     </style>
 </head>
 <body class="font-body antialiased relative min-h-screen selection:bg-cyber-blue selection:text-black">
@@ -216,7 +269,7 @@
             <!-- Desktop Links -->
             <div class="hidden md:flex items-center gap-8">
                 <a href="#products" class="text-xs font-bold tracking-[0.2em] text-gray-300 hover:text-white transition-colors uppercase">Collection</a>
-                <a href="#about" class="text-xs font-bold tracking-[0.2em] text-gray-300 hover:text-white transition-colors uppercase">Concept</a>
+                <a href="#about" class="text-xs font-bold tracking-[0.2em] text-gray-300 hover:text-white transition-colors uppercase">FAQs</a>
                 <a href="#features" class="text-xs font-bold tracking-[0.2em] text-gray-300 hover:text-white transition-colors uppercase">Tech</a>
             </div>
 
@@ -312,6 +365,65 @@
 
             <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Javascript will inject here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ / Concept Section -->
+    <section id="about" class="py-24 relative z-10 bg-black/40 backdrop-blur-md border-y border-white/5">
+        <div class="max-w-3xl mx-auto px-6">
+            <h2 class="font-display font-black text-4xl text-center text-white mb-10 chrome-text-simple">FAQS</h2>
+            
+            <div class="faq">
+                <details>
+                    <summary>Who are we?</summary>
+                    <p>We’re two brothers from Alaska who create the coolest vehicular accessory known to man: fully customizable hood ornaments designed to let cars look as cool as their drivers already are.</p>
+                </details>
+
+                <details>
+                    <summary>Why magnets?</summary>
+                    <p>Magnets make installation fast and tool-free. No drilling, no damage, no permanent changes to your vehicle. We use strong neodymium magnets for a secure, paint-safe hold.</p>
+                </details>
+
+                <details>
+                    <summary>Are the ornaments safe at highway speeds?</summary>
+                    <p>Yes. Our ornaments are tested for stability and hold securely at normal driving and highway speeds when placed on a flat metal section of the hood.</p>
+                </details>
+
+                <details>
+                    <summary>Can I get a custom hood ornament?</summary>
+                    <p>Absolutely. If you can imagine it — from photos, sketches, logos, or full ideas — we can turn it into a 3D-printed hood ornament.</p>
+                </details>
+
+                <details>
+                    <summary>What materials do you use?</summary>
+                    <p>Right now we use high-quality plastics for durability, detail, and weight balance. Premium metal 3D-printed ornaments (gold/chrome finishes, light-up) are planned for future limited edition ornaments.</p>
+                </details>
+
+                <details>
+                    <summary>What sizes and colors do you offer?</summary>
+                    <p>Every model can be printed in <strong>any size and color</strong> you want — small, huge, medium, or completely custom dimensions.</p>
+                </details>
+
+                <details>
+                    <summary>Are the ornaments weatherproof?</summary>
+                    <p>Yes. They’re built to withstand sun, rain, snow, cold, and daily driving conditions.</p>
+                </details>
+
+                <details>
+                    <summary>Will they fit my car?</summary>
+                    <p>Most vehicles have steel hoods that magnets stick to. Some cars have aluminum hoods, and magnets will <strong>not</strong> stick to those. We recommend testing your hood with a simple fridge magnet first. But we will be offering a suction cup base soon.</p>
+                </details>
+
+                <details>
+                    <summary>How long does a custom order take?</summary>
+                    <p>Typically 1–3 weeks depending on design complexity and print time.</p>
+                </details>
+
+                <details>
+                    <summary>Are they easy to remove?</summary>
+                    <p>Yes. They hold firmly while driving but can be removed by hand when you want to swap designs.</p>
+                </details>
             </div>
         </div>
     </section>
