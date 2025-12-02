@@ -538,7 +538,7 @@
             `).join('');
         }
 
-        // --- CHECKOUT LOGIC ---
+        // --- CHECKOUT LOGIC (Backend Connection) ---
         async function initiateCheckout() {
             const btn = document.getElementById('checkout-btn');
             
@@ -550,61 +550,45 @@
             // UI Loading State
             btn.classList.add('btn-loading');
             
-            // PREPARE DATA FOR STRIPE
-            // This is the data structure you send to your backend
-            const lineItems = cart.map(item => ({
-                price_data: {
-                    currency: 'usd',
-                    product_data: {
-                        name: item.name,
-                        images: [item.images[0]], // Optional: Add images
-                    },
-                    unit_amount: Math.round(item.price * 100), // Stripe expects cents
-                },
-                quantity: item.quantity,
-            }));
-
-            // SIMULATION
-            // Since we don't have a backend URL (like https://your-api.com/create-checkout-session),
-            // We will simulate the process and log the data you need to send.
-            
-            setTimeout(() => {
-                btn.classList.remove('btn-loading');
-                
-                console.log("------------------------------------------");
-                console.log("READY FOR BACKEND PROCESSING:");
-                console.log("Send this payload to Stripe /v1/checkout/sessions:");
-                console.log(JSON.stringify({
-                    payment_method_types: ['card'],
-                    line_items: lineItems,
-                    mode: 'payment',
-                    success_url: window.location.href + '?success=true',
-                    cancel_url: window.location.href + '?canceled=true',
-                }, null, 2));
-                console.log("------------------------------------------");
-
-                // Alert for the user (You)
-                alert(`CHECKOUT SIMULATION\n\nTo make this live:\n1. Replace STRIPE_PUBLIC_KEY in the code.\n2. Point this function to your backend URL.\n\nCheck the Console (F12) to see the exact data payload generated.`);
-                
-                /* // REAL IMPLEMENTATION EXAMPLE:
-                
-                const response = await fetch('/create-checkout-session', {
+            try {
+                // IMPORTANT: This URL must point to where your server.js is running.
+                // If running locally, it is usually http://localhost:4242
+                const response = await fetch('http://localhost:4242/create-checkout-session', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ items: cart })
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        items: cart
+                    }),
                 });
-                
+
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.statusText}`);
+                }
+
                 const session = await response.json();
-                
+
+                if (session.error) {
+                    alert(session.error);
+                    btn.classList.remove('btn-loading');
+                    return;
+                }
+
+                // Redirect to Stripe Checkout
                 const result = await stripe.redirectToCheckout({
-                    sessionId: session.id
+                    sessionId: session.id,
                 });
-                
+
                 if (result.error) {
                     alert(result.error.message);
+                    btn.classList.remove('btn-loading');
                 }
-                */
-            }, 2000);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to connect to the backend server. Make sure "node server.js" is running on port 4242.');
+                btn.classList.remove('btn-loading');
+            }
         }
 
         // --- UI Interactions ---
@@ -637,6 +621,16 @@
         // Init
         document.addEventListener('DOMContentLoaded', () => {
             renderProducts();
+
+            // Check for success/cancel upon page load (Redirected back from Stripe)
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('success')) {
+                cart = []; // Clear cart on success
+                updateCartUI();
+                setTimeout(() => alert("Payment Successful! Your Hood Iconz are on the way."), 500);
+            } else if (urlParams.get('canceled')) {
+                setTimeout(() => alert("Payment canceled."), 500);
+            }
         });
 
     </script>
