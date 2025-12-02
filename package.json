@@ -1,0 +1,8 @@
+{
+  "name": "hood-iconz-app",
+  "version": "1.0.0",
+  "description": "Hood Iconz E-commerce with Netlify Functions",
+  "dependencies": {
+    "stripe": "^14.0.0"
+  }
+}
