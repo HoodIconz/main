@@ -22,8 +22,8 @@
             theme: {
                 extend: {
                     colors: {
-                        'cyber-pink': '#FF0055', /* More vibrant pop */
-                        'cyber-blue': '#00F0FF', /* More vibrant pop */
+                        'cyber-pink': '#FF0055', 
+                        'cyber-blue': '#00F0FF', 
                         'cyber-purple': '#8F00FF',
                         'void-dark': '#000000',
                     },
@@ -72,7 +72,6 @@
             background-color: #000000;
             color: #ffffff;
             overflow-x: hidden;
-            /* No static background image on body, using fixed div for mesh */
         }
 
         /* Modern Mesh Gradient Background */
@@ -89,12 +88,12 @@
                 radial-gradient(at 98% 98%, rgba(255, 0, 85, 0.2) 0px, transparent 50%),
                 radial-gradient(at 2% 98%, rgba(0, 240, 255, 0.15) 0px, transparent 50%),
                 radial-gradient(at 50% 50%, rgba(255, 255, 255, 0.03) 0px, transparent 50%);
-            filter: blur(80px); /* The "Samsung" soft blur look */
+            filter: blur(80px);
             background-size: 120% 120%;
             opacity: 0.8;
         }
 
-        /* Chrome Text Effect - Cleaner, Sharper */
+        /* Chrome Text Effect */
         .chrome-text {
             background: linear-gradient(180deg, #FFFFFF 0%, #E0E0E0 40%, #00F0FF 50%, #FFFFFF 55%, #8F00FF 100%);
             -webkit-background-clip: text;
@@ -108,7 +107,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Premium Liquid Glass - Apple "Frosted" Style */
+        /* Premium Liquid Glass */
         .glass-panel {
             background: rgba(20, 20, 20, 0.4);
             backdrop-filter: blur(40px) saturate(180%);
@@ -117,7 +116,7 @@
             box-shadow: 
                 0 20px 40px rgba(0, 0, 0, 0.4),
                 inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); /* iOS Easing */
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         .glass-panel:hover {
@@ -127,7 +126,7 @@
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
         }
         
-        /* Action Button with "Google Pop" Gradient */
+        /* Action Button */
         .btn-modern {
             background: linear-gradient(135deg, #FF0055, #8F00FF, #00F0FF);
             background-size: 200% 200%;
@@ -237,7 +236,7 @@
         <!-- Main Content -->
         <div class="relative z-10 text-center w-full max-w-6xl mx-auto">
             
-            <p class="font-mono text-cyber-blue text-xs md:text-sm tracking-[0.5em] mb-4 animate-pulse drop-shadow-glow-blue">EST. 2025 // AUTOMOTIVE AUGMENTATION</p>
+            <p class="font-mono text-cyber-blue text-xs md:text-sm tracking-[0.5em] mb-4 animate-pulse drop-shadow-glow-blue">EST. 2085 // AUTOMOTIVE AUGMENTATION</p>
             
             <!-- Massive Chrome Title -->
             <h1 class="font-display font-black text-6xl sm:text-8xl md:text-9xl tracking-tighter leading-none mb-8 chrome-text select-none hover:scale-[1.02] transition-transform duration-500">
@@ -323,7 +322,7 @@
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-12">
                 <div>
                     <h3 class="font-display font-black text-2xl text-white tracking-widest mb-2">HOOD ICONZ</h3>
-                    <p class="text-gray-500 text-sm max-w-md">The future of automotive customization. <br>Based in Colorado, shipping worldwide.</p>
+                    <p class="text-gray-500 text-sm max-w-md">The future of automotive customization. <br>Based in Neo-Tokyo, shipping worldwide.</p>
                 </div>
                 <div class="flex gap-6">
                     <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:text-white hover:bg-cyber-pink transition-all">
@@ -335,7 +334,7 @@
                 </div>
             </div>
             <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 font-mono">
-                <p>&copy; 2025 HOOD ICONZ. ALL RIGHTS RESERVED.</p>
+                <p>&copy; 2085 HOOD ICONZ. ALL RIGHTS RESERVED.</p>
                 <div class="flex gap-6 mt-4 md:mt-0">
                     <a href="#" class="hover:text-gray-300 transition-colors">PRIVACY</a>
                     <a href="#" class="hover:text-gray-300 transition-colors">TERMS</a>
@@ -386,8 +385,13 @@
         // ==========================================
         // CONFIGURATION
         // ==========================================
-        // Replace with your Stripe Public Key (starts with pk_test_ or pk_live_)
+        // 1. Stripe Public Key (Replace with yours)
         const STRIPE_PUBLIC_KEY = 'pk_test_YOUR_PUBLISHABLE_KEY_HERE';
+        
+        // 2. Backend URL 
+        // Netlify serves functions at this specific path. 
+        // We use relative path so it works on localhost and live site.
+        const BACKEND_URL = '/.netlify/functions/checkout'; 
         
         // Initialize Stripe
         let stripe;
@@ -436,6 +440,8 @@
         function renderProducts() {
             const grid = document.getElementById('product-grid');
             grid.innerHTML = products.map((product, index) => {
+                const hasMultipleImages = product.images.length > 1;
+                
                 return `
                 <div class="glass-panel rounded-3xl overflow-hidden relative group h-full flex flex-col" style="animation-delay: ${index * 100}ms">
                     
@@ -538,7 +544,7 @@
             `).join('');
         }
 
-        // --- CHECKOUT LOGIC (Backend Connection) ---
+        // --- CHECKOUT LOGIC (Netlify Function Connection) ---
         async function initiateCheckout() {
             const btn = document.getElementById('checkout-btn');
             
@@ -551,9 +557,8 @@
             btn.classList.add('btn-loading');
             
             try {
-                // IMPORTANT: This URL must point to where your server.js is running.
-                // If running locally, it is usually http://localhost:4242
-                const response = await fetch('http://localhost:4242/create-checkout-session', {
+                // Call the Netlify Function
+                const response = await fetch(BACKEND_URL, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -563,16 +568,20 @@
                     }),
                 });
 
+                if (response.status === 404) {
+                     // This means the function isn't found (likely because we are in preview mode)
+                     throw new Error('Backend function not found. Did you deploy to Netlify?');
+                }
+
                 if (!response.ok) {
-                    throw new Error(`Server error: ${response.statusText}`);
+                    const errData = await response.json();
+                    throw new Error(errData.error || `Server error: ${response.statusText}`);
                 }
 
                 const session = await response.json();
 
                 if (session.error) {
-                    alert(session.error);
-                    btn.classList.remove('btn-loading');
-                    return;
+                    throw new Error(session.error);
                 }
 
                 // Redirect to Stripe Checkout
@@ -581,12 +590,11 @@
                 });
 
                 if (result.error) {
-                    alert(result.error.message);
-                    btn.classList.remove('btn-loading');
+                    throw new Error(result.error.message);
                 }
             } catch (error) {
-                console.error('Error:', error);
-                alert('Failed to connect to the backend server. Make sure "node server.js" is running on port 4242.');
+                console.error('Checkout Error:', error);
+                alert(`Checkout Failed: ${error.message}\n\n(Note: You must deploy to Netlify for payments to work.)`);
                 btn.classList.remove('btn-loading');
             }
         }
