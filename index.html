@@ -448,11 +448,52 @@
                 <div class="flex gap-6 mt-4 md:mt-0">
                     <a href="#" class="hover:text-gray-300 transition-colors">PRIVACY</a>
                     <a href="#" class="hover:text-gray-300 transition-colors">TERMS</a>
-                    <a href="#" class="hover:text-gray-300 transition-colors">RETURNS</a>
+                    <button onclick="toggleReturnModal()" class="hover:text-gray-300 transition-colors uppercase">RETURNS</button>
                 </div>
             </div>
         </div>
     </footer>
+
+    <!-- Returns Modal -->
+    <div id="return-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[80] hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
+        <div class="glass-panel w-full max-w-lg p-8 rounded-2xl relative transform scale-95 transition-transform duration-300 border border-white/10">
+            <button onclick="toggleReturnModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            
+            <h2 class="font-display font-bold text-2xl text-white mb-2 chrome-text-simple">INITIATE RETURN</h2>
+            <p class="text-gray-400 text-sm mb-6">We're sorry it didn't work out. Fill this out to start the process.</p>
+            
+            <form onsubmit="submitReturn(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Order Number</label>
+                    <input type="text" id="return-order" required class="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:border-cyber-blue focus:outline-none transition-colors placeholder-gray-600" placeholder="#12345">
+                </div>
+                
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Reason</label>
+                    <div class="relative">
+                        <select id="return-reason" class="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:border-cyber-blue focus:outline-none transition-colors appearance-none [&>option]:bg-black">
+                            <option>Defective / Damaged</option>
+                            <option>Wrong Item Sent</option>
+                            <option>Changed Mind</option>
+                            <option>Other</option>
+                        </select>
+                        <i class="fas fa-chevron-down absolute right-3 top-3.5 text-gray-500 pointer-events-none text-xs"></i>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Message</label>
+                    <textarea id="return-message" rows="4" class="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:border-cyber-blue focus:outline-none transition-colors placeholder-gray-600" placeholder="Tell us what happened..."></textarea>
+                </div>
+                
+                <button type="submit" class="w-full py-4 btn-modern text-white font-bold font-display uppercase tracking-widest hover:opacity-90 transition-opacity rounded-xl shadow-[0_0_20px_rgba(0,240,255,0.3)] mt-2">
+                    Send Request via Email
+                </button>
+            </form>
+        </div>
+    </div>
 
     <!-- Cart Slide-Over -->
     <div id="cart-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-md z-[60] hidden transition-opacity opacity-0" onclick="toggleCart()"></div>
@@ -726,6 +767,52 @@
                 setTimeout(() => overlay.classList.add('hidden'), 500);
                 document.body.style.overflow = '';
             }
+        }
+
+        // --- Returns Modal Logic ---
+        function toggleReturnModal() {
+            const modal = document.getElementById('return-modal');
+            const content = modal.querySelector('div');
+            
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                // Small timeout to allow display:block to apply before opacity transition
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    content.classList.remove('scale-95');
+                    content.classList.add('scale-100');
+                }, 10);
+                document.body.style.overflow = 'hidden';
+            } else {
+                modal.classList.add('opacity-0');
+                content.classList.remove('scale-100');
+                content.classList.add('scale-95');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+                document.body.style.overflow = '';
+            }
+        }
+
+        function submitReturn(e) {
+            e.preventDefault();
+            const order = document.getElementById('return-order').value;
+            const reason = document.getElementById('return-reason').value;
+            const message = document.getElementById('return-message').value;
+            
+            // Construct email body
+            const subject = encodeURIComponent(`Return Request: Order ${order}`);
+            const body = encodeURIComponent(`Order Number: ${order}\nReason: ${reason}\n\nMessage:\n${message}\n\n----------------\nPlease attach any relevant photos to this email.`);
+            
+            // Open default email client
+            window.location.href = `mailto:hoodiconz@gmail.com?subject=${subject}&body=${body}`;
+            
+            // Close modal after short delay
+            setTimeout(() => {
+                toggleReturnModal();
+                // Reset form
+                e.target.reset();
+            }, 1000);
         }
 
         function showNotification() {
