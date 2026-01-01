@@ -310,10 +310,10 @@
         <div class="absolute bottom-0 w-full border-t border-white/5 bg-black/20 backdrop-blur-md h-12 flex items-center overflow-hidden marquee-container">
             <div class="whitespace-nowrap animate-marquee flex gap-12 items-center">
                 <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase"><span class="text-cyber-blue mx-2 drop-shadow-glow-blue">●</span> High Velocity Magnets</span>
-                <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase"><span class="text-cyber-pink mx-2 drop-shadow-glow-pink">●</span> Ultra High UV Resistant PLA Filament</span>
+                <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase"><span class="text-cyber-pink mx-2 drop-shadow-glow-pink">●</span> Ultra High UV Resistant PETG Filament</span>
                 <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase"><span class="text-cyber-purple mx-2">●</span> Modular Design</span>
                 <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase"><span class="text-cyber-blue mx-2 drop-shadow-glow-blue">●</span> High Velocity Magnets</span>
-                <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase"><span class="text-cyber-pink mx-2 drop-shadow-glow-pink">●</span> Ultra High UV Resistant PLA Filament</span>
+                <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase"><span class="text-cyber-pink mx-2 drop-shadow-glow-pink">●</span> Ultra High UV Resistant PETG Filament</span>
                 <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase"><span class="text-cyber-purple mx-2">●</span> Modular Design</span>
             </div>
         </div>
@@ -342,7 +342,7 @@
                         <i class="fas fa-cube text-3xl text-cyber-purple"></i>
                     </div>
                     <h3 class="font-display font-bold text-xl mb-3 text-white">Custom Print</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Each piece is printed in high-fidelity ultra high UV resistant PLA filament. </p>
+                    <p class="text-gray-400 text-sm leading-relaxed">Each piece is printed in high-fidelity ultra high UV resistant PETG filament. </p>
                 </div>
             </div>
         </div>
@@ -495,6 +495,19 @@
         </div>
     </div>
 
+    <!-- Lightbox / Zoom Modal -->
+    <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4 cursor-zoom-out" onclick="closeLightbox()">
+        <!-- Close Button -->
+        <button class="absolute top-6 right-6 text-white/50 hover:text-white transition-colors z-[101]">
+            <i class="fas fa-times text-3xl"></i>
+        </button>
+        
+        <!-- Image Container -->
+        <div class="relative w-full h-full flex items-center justify-center" onclick="event.stopPropagation()">
+            <img id="lightbox-img" src="" class="max-w-full max-h-[90vh] object-contain drop-shadow-[0_0_50px_rgba(0,240,255,0.2)] scale-95 transition-transform duration-300 select-none">
+        </div>
+    </div>
+
     <!-- Cart Slide-Over -->
     <div id="cart-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-md z-[60] hidden transition-opacity opacity-0" onclick="toggleCart()"></div>
     <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-[#0a0a0a] border-l border-white/10 z-[70] transform translate-x-full transition-transform duration-500 cubic-bezier(0.19, 1, 0.22, 1) flex flex-col shadow-[-20px_0_50px_rgba(0,0,0,0.7)]">
@@ -557,30 +570,70 @@
             {
                 id: 1,
                 name: "UNICORN",
-                price: 49.00,
+                price: 50.00,
                 images: [
-                    "https://iili.io/fxgnjxj.md.png"
+                    "https://iili.io/fxgnjxj.md.png",
+                    "https://iili.io/fh8VdCP.md.png"
                 ],
                 currentImageIndex: 0,
-                desc: "The classic reimagined. Low-poly geometry with a menacing matte finish.",
+                desc: "Mythical aerodynamics. A sharp, geometric reimagining of the legendary beast, designed to cut through the wind and reality alike.",
                 tags: []
             },
             {
                 id: 2,
                 name: "ELEPHANT",
-                price: 55.00,
-                images: ["https://iili.io/fzTKLPf.md.png"],
+                price: 50.00,
+                images: [
+                    "https://iili.io/fzTKLPf.md.png",
+                    "https://iili.io/fh8rDsn.md.png"
+                ],
                 currentImageIndex: 0,
-                desc: "The classic elephant. 1st edition.",
+                desc: "Unstoppable force. Heavy-duty aesthetics representing wisdom and raw power. Dominate the lane with this low-poly titan.",
                 tags: []
             },
             {
                 id: 3,
                 name: "GOLDEN RETRIEVER",
-                price: 65.00,
-                images: ["https://iili.io/fzIt05x.md.png"],
+                price: 50.00,
+                images: [
+                    "https://iili.io/fzIt05x.md.png",
+                    "https://iili.io/fh81Wp2.md.png"
+                ],
                 currentImageIndex: 0,
-                desc: "Ancient protection meets future tech. Aggressive styling for aggressive drivers.",
+                desc: "The faithful navigator. A tribute to man's best friend, scanning the horizon. Loyalty that sticks at any speed.",
+                tags: []
+            },
+            {
+                id: 4,
+                name: "HIGHLAND COW",
+                price: 50.00,
+                images: [
+                    "https://iili.io/fhBEUQf.md.png",
+                    "https://iili.io/fhBWV9I.md.png"
+                ],
+                currentImageIndex: 0,
+                desc: "Rugged endurance. The spirit of the wild highlands, built for the toughest roads. Horns out, fear nothing.",
+                tags: []
+            },
+            {
+                id: 5,
+                name: "ZEN MASTER CLAUS",
+                price: 50.00,
+                images: [
+                    "https://iili.io/fh8SONt.md.png",
+                    "https://iili.io/fh8SKF4.md.png"
+                ],
+                currentImageIndex: 0,
+                desc: "Presents, I have. Speed, you seek. A festive fusion of galactic wisdom and holiday cheer. May the torque be with you.",
+                tags: []
+            },
+            {
+                id: 6,
+                name: "VELOCITY RAPTOR",
+                price: 50.00,
+                images: ["https://iili.io/fh8X7I4.md.png"],
+                currentImageIndex: 0,
+                desc: "Evolution accelerated. Razor-sharp geometry meets prehistoric instinct. A ruthless hunter designed to dominate the fast lane.",
                 tags: []
             }
         ];
@@ -598,8 +651,26 @@
                     
                     <!-- Image Area -->
                     <div class="h-64 relative overflow-hidden bg-white/5 flex items-center justify-center p-4 group/image">
+                        
+                        <!-- Zoom Button -->
+                        <button onclick="openLightbox(${product.id}, event)" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-white/70 hover:text-white hover:bg-cyber-pink transition-all border border-white/10 z-20 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 duration-300">
+                            <i class="fas fa-expand text-xs"></i>
+                        </button>
+
+                        <!-- Navigation Arrows -->
+                        ${hasMultipleImages ? `
+                            <button onclick="changeImage(${product.id}, -1, event)" class="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center text-white/20 hover:text-cyber-blue transition-colors z-20 hover:bg-black/40 rounded-full backdrop-blur-sm opacity-0 group-hover:opacity-100 duration-300">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button onclick="changeImage(${product.id}, 1, event)" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center text-white/20 hover:text-cyber-blue transition-colors z-20 hover:bg-black/40 rounded-full backdrop-blur-sm opacity-0 group-hover:opacity-100 duration-300">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        ` : ''}
+
                         <!-- Main Image -->
-                        <img src="${product.images[0]}" class="h-full w-full object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover:scale-105 z-0">
+                        <img id="img-${product.id}" 
+                             src="${product.images[0]}" 
+                             class="h-full w-full object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] transition-all duration-300 group-hover:scale-105 z-0 select-none">
                     </div>
                     
                     <!-- Content -->
@@ -618,6 +689,74 @@
                 </div>
             `;
             }).join('');
+        }
+
+        // --- Image Gallery Function ---
+        function changeImage(id, step, event) {
+            if (event) event.stopPropagation(); // Stop bubbling
+
+            const product = products.find(p => p.id === id);
+            if (!product || product.images.length <= 1) return;
+
+            // Calculate new index wrapping around
+            let newIndex = product.currentImageIndex + step;
+            if (newIndex >= product.images.length) newIndex = 0;
+            if (newIndex < 0) newIndex = product.images.length - 1;
+            
+            product.currentImageIndex = newIndex;
+            
+            const imgElement = document.getElementById(`img-${id}`);
+            
+            // Fade out
+            imgElement.style.opacity = '0';
+            imgElement.style.transform = 'scale(0.95)';
+            
+            setTimeout(() => {
+                // Change source
+                imgElement.src = product.images[product.currentImageIndex];
+                
+                // Fade in
+                imgElement.onload = () => {
+                    imgElement.style.opacity = '1';
+                    imgElement.style.transform = 'scale(1)';
+                };
+            }, 200);
+        }
+
+        // --- Lightbox Functions ---
+        function openLightbox(productId, event) {
+            if (event) event.stopPropagation(); // Prevent nextImage trigger if user clicks zoom button
+            
+            const product = products.find(p => p.id === productId);
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            
+            // Use current image index so it matches what they are looking at in the card
+            lightboxImg.src = product.images[product.currentImageIndex || 0];
+            
+            lightbox.classList.remove('hidden');
+            // small delay for transition
+            setTimeout(() => {
+                lightbox.classList.remove('opacity-0');
+                lightboxImg.classList.remove('scale-95');
+                lightboxImg.classList.add('scale-100');
+            }, 10);
+            
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            
+            lightbox.classList.add('opacity-0');
+            lightboxImg.classList.remove('scale-100');
+            lightboxImg.classList.add('scale-95');
+            
+            setTimeout(() => {
+                lightbox.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300);
         }
 
         // --- Cart Functions ---
@@ -720,8 +859,8 @@
                 });
 
                 if (response.status === 404) {
-                     // This means the function isn't found (likely because we are in preview mode)
-                     throw new Error('Backend function not found. Did you deploy to Netlify?');
+                      // This means the function isn't found (likely because we are in preview mode)
+                      throw new Error('Backend function not found. Did you deploy to Netlify?');
                 }
 
                 if (!response.ok) {
