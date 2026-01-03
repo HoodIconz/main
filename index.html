@@ -34,7 +34,7 @@
                     animation: {
                         'float': 'float 8s ease-in-out infinite',
                         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'marquee': 'marquee 25s linear infinite',
+                        'marquee': 'marquee 40s linear infinite', /* Slowed down slightly for longer content */
                         'fade-in': 'fadeIn 0.5s ease-out',
                         'gradient-move': 'gradientMove 15s ease infinite',
                     },
@@ -45,7 +45,7 @@
                         },
                         marquee: {
                             '0%': { transform: 'translateX(0%)' },
-                            '100%': { transform: 'translateX(-100%)' },
+                            '100%': { transform: 'translateX(-50%)' }, /* Changed to -50% for seamless loop */
                         },
                         fadeIn: {
                             '0%': { opacity: '0', transform: 'translateY(10px)' },
@@ -309,6 +309,15 @@
         <!-- Scrolling Ticker -->
         <div class="absolute bottom-0 w-full border-t border-white/5 bg-black/20 backdrop-blur-md h-12 flex items-center overflow-hidden marquee-container">
             <div class="whitespace-nowrap animate-marquee flex gap-12 items-center">
+                <!-- Original Content -->
+                <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase"><span class="text-cyber-blue mx-2 drop-shadow-glow-blue">●</span> High Velocity Magnets</span>
+                <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase"><span class="text-cyber-pink mx-2 drop-shadow-glow-pink">●</span> Ultra High UV Resistant PETG Filament</span>
+                <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase"><span class="text-cyber-purple mx-2">●</span> Modular Design</span>
+                <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase"><span class="text-cyber-blue mx-2 drop-shadow-glow-blue">●</span> High Velocity Magnets</span>
+                <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase"><span class="text-cyber-pink mx-2 drop-shadow-glow-pink">●</span> Ultra High UV Resistant PETG Filament</span>
+                <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase"><span class="text-cyber-purple mx-2">●</span> Modular Design</span>
+                
+                <!-- Duplicate Content for Seamless Loop -->
                 <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase"><span class="text-cyber-blue mx-2 drop-shadow-glow-blue">●</span> High Velocity Magnets</span>
                 <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase"><span class="text-cyber-pink mx-2 drop-shadow-glow-pink">●</span> Ultra High UV Resistant PETG Filament</span>
                 <span class="text-gray-300 font-display font-bold text-xs tracking-widest uppercase"><span class="text-cyber-purple mx-2">●</span> Modular Design</span>
