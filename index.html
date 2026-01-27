@@ -624,7 +624,8 @@
                 ],
                 currentImageIndex: 0,
                 desc: "The faithful navigator. A tribute to man's best friend, scanning the horizon. Loyalty that sticks at any speed.",
-                tags: []
+                tags: [],
+                dimensions: "7.5x9.5x12"
             },
             {
                 id: 2,
@@ -636,7 +637,8 @@
                 ],
                 currentImageIndex: 0,
                 desc: "Unstoppable force. Heavy-duty aesthetics representing wisdom and raw power. Dominate the lane with this low-poly titan.",
-                tags: []
+                tags: [],
+                dimensions: "9x9.5x9.5"
             },
             {
                 id: 4,
@@ -650,7 +652,8 @@
                 ],
                 currentImageIndex: 0,
                 desc: "Rugged endurance. The spirit of the wild highlands, built for the toughest roads. Horns out, fear nothing.",
-                tags: []
+                tags: [],
+                dimensions: "9x9x9.5"
             },
             {
                 id: 5,
@@ -664,7 +667,8 @@
                 ],
                 currentImageIndex: 0,
                 desc: "Presents, I have. Speed, you seek. A festive fusion of galactic wisdom and holiday cheer. May the torque be with you.",
-                tags: []
+                tags: [],
+                dimensions: "11x8x10"
             },
             {
                 id: 6,
@@ -688,7 +692,8 @@
                 variantColors: {
                     'Standard': '#A0A0A0',
                     'Toxic Green': '#39FF14'
-                }
+                },
+                dimensions: "8x13.5x10"
             },
             {
                 id: 7,
@@ -700,7 +705,8 @@
                 ],
                 currentImageIndex: 0,
                 desc: "Silent predator. Sleek, aerodynamic lines capturing the essence of the hunt. Stalk the streets with feline agility.",
-                tags: []
+                tags: [],
+                dimensions: "6x9x12"
             },
             {
                 id: 8,
@@ -712,7 +718,8 @@
                 ],
                 currentImageIndex: 0,
                 desc: "Ancient malice, modern mesh. A Japanese demon mask to ward off bad spirits and traffic alike. The ultimate guardian of the grill.",
-                tags: []
+                tags: [],
+                dimensions: "9x12x10.5"
             },
             {
                 id: 9,
@@ -725,7 +732,8 @@
                 ],
                 currentImageIndex: 0,
                 desc: "Primal dominance. The king of the asphalt jungle. A heavy-hitting statement piece that pounds its chest at the speed limit.",
-                tags: []
+                tags: [],
+                dimensions: "8x10x13"
             },
             {
                 id: 10,
@@ -737,7 +745,8 @@
                 ],
                 currentImageIndex: 0,
                 desc: "Terminal velocity. Dive into the fast lane with the fastest predator in the sky. Sharp angles for cutting wind and chasing horizons.",
-                tags: []
+                tags: [],
+                dimensions: "8.5x9.5x15"
             },
             {
                 id: 11,
@@ -749,7 +758,22 @@
                 ],
                 currentImageIndex: 0,
                 desc: "Iconic quirk. The classic convoy companion, reimagined. Not just for bathtime anymore—this duck is built for the open road.",
-                tags: []
+                tags: [],
+                dimensions: "6.5x9.5x9"
+            },
+            {
+                id: 12,
+                name: "THE HIPPO",
+                price: 60.00,
+                images: [
+                    "https://iili.io/fPtX0MP.md.png",
+                    "https://iili.io/fPthKf1.md.png",
+                    "https://iili.io/fPthN5b.md.png"
+                ],
+                currentImageIndex: 0,
+                desc: "Territorial dominance. Nature's most dangerous tank, forged in geometry. Clear the lane or get trampled.",
+                tags: [],
+                dimensions: "5.5x10x4"
             }
         ];
 
@@ -794,6 +818,15 @@
                             <h3 class="font-display font-bold text-lg text-white group-hover:text-cyber-blue transition-colors">${product.name}</h3>
                             <span class="font-mono text-white">$${product.price}</span>
                         </div>
+
+                        <!-- Dimensions (Conditional) -->
+                        ${product.dimensions ? `
+                            <div class="flex items-center gap-2 mb-3 text-[10px] font-mono text-gray-400 bg-white/5 w-fit px-2 py-1 rounded">
+                                <i class="fas fa-ruler-combined text-cyber-blue"></i>
+                                <span>${product.dimensions}</span>
+                            </div>
+                        ` : ''}
+
                         <p class="text-gray-300 text-xs leading-relaxed mb-6 flex-1 font-light">${product.desc}</p>
                         
                         <!-- Color Switcher -->
