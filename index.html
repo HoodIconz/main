@@ -644,7 +644,9 @@
                 price: 60.00,
                 images: [
                     "https://iili.io/fhBEUQf.md.png",
-                    "https://iili.io/fhBWV9I.md.png"
+                    "https://iili.io/fhBWV9I.md.png",
+                    "https://iili.io/fPtIRyJ.md.png",
+                    "https://iili.io/fPtI8F9.md.png"
                 ],
                 currentImageIndex: 0,
                 desc: "Rugged endurance. The spirit of the wild highlands, built for the toughest roads. Horns out, fear nothing.",
@@ -671,7 +673,22 @@
                 images: ["https://iili.io/fh8X7I4.md.png"],
                 currentImageIndex: 0,
                 desc: "Evolution accelerated. Razor-sharp geometry meets prehistoric instinct. A ruthless hunter designed to dominate the fast lane.",
-                tags: []
+                tags: [],
+                // New Properties for Color Switching
+                activeColorVariant: 'Standard',
+                colorVariants: {
+                    'Standard': ["https://iili.io/fh8X7I4.md.png"],
+                    'Toxic Green': [
+                        "https://iili.io/fPtKu7p.md.png",
+                        "https://iili.io/fPtKxEJ.md.png",
+                        "https://iili.io/fPtfNAN.md.png",
+                        "https://iili.io/fPtqVz7.md.png"
+                    ]
+                },
+                variantColors: {
+                    'Standard': '#A0A0A0',
+                    'Toxic Green': '#39FF14'
+                }
             },
             {
                 id: 7,
@@ -779,6 +796,19 @@
                         </div>
                         <p class="text-gray-300 text-xs leading-relaxed mb-6 flex-1 font-light">${product.desc}</p>
                         
+                        <!-- Color Switcher -->
+                        ${product.colorVariants ? `
+                            <div class="flex gap-2 mb-4">
+                                ${Object.keys(product.colorVariants).map(variant => `
+                                    <button onclick="switchColor(${product.id}, '${variant}', event)" 
+                                        class="w-6 h-6 rounded-full border border-white/20 transition-transform hover:scale-110 ${product.activeColorVariant === variant ? 'ring-2 ring-white scale-110' : ''}"
+                                        style="background-color: ${product.variantColors[variant]}; box-shadow: 0 0 10px ${product.variantColors[variant]}aa;"
+                                        title="${variant}">
+                                    </button>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                        
                         <button onclick="addToCart(${product.id})" class="w-full py-3 border border-white/10 rounded-xl text-xs font-bold text-white uppercase tracking-widest hover:bg-white hover:text-black transition-all group-hover:border-white/30 flex items-center justify-center gap-2 backdrop-blur-sm bg-black/20">
                             <span>Add to Cache</span>
                             <i class="fas fa-plus text-[10px]"></i>
@@ -787,6 +817,22 @@
                 </div>
             `;
             }).join('');
+        }
+        
+        // --- Color Switching Function ---
+        function switchColor(id, variantName, event) {
+            if(event) event.stopPropagation();
+            
+            const product = products.find(p => p.id === id);
+            if (!product || !product.colorVariants) return;
+            
+            // Update product state
+            product.images = product.colorVariants[variantName];
+            product.currentImageIndex = 0;
+            product.activeColorVariant = variantName;
+            
+            // Re-render to show new images and arrows
+            renderProducts(); 
         }
 
         // --- Image Gallery Function ---
